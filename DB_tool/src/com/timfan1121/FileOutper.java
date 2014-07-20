@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 
 public class FileOutper {
+	//
 	public static void outFile(String content, String fileName) {
 		File f = new File(fileName);
 		if (!f.exists())

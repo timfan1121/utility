@@ -3,7 +3,7 @@ package com.timfan1121;
 
 public class DaoGen {
 	public void gen(String tableName,String className){
-		
+		//git
 		String sclassName=className.substring(0, 1).toLowerCase()+className.substring(1);
 		
 		StringBuilder sb=new StringBuilder();

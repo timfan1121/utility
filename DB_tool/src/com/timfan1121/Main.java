@@ -47,8 +47,8 @@ public class Main {
 					pro.getProperty("model.className"),
 					pro.getProperty("model.className") + "Service");
 
-			// html
-
+			// html 2
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
