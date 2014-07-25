@@ -3,6 +3,7 @@ package com.timfan1121;
 import java.util.HashSet;
 import java.util.Set;
 
+
 public class ModelGen {
 	public void gen(String patten,String tableName,String className){
 		String[] cols=patten.split("@");
@@ -19,18 +20,19 @@ public class ModelGen {
 			}
 		}
 		StringBuilder sb=new StringBuilder();
-		sb.append("@Table(\""+tableName+"\")\n");
+		sb.append("@Entity\n");
+		sb.append("@Table(name=\""+tableName+"\")\n");
 		sb.append("public class "+className+"{\n");
 		for(ColAttr c:cs){
-			sb.append("\t@column(name=\""+c.getDb_name()+"\")\n");
+			sb.append("\t@Column(name=\""+c.getDb_name()+"\")\n");
 			sb.append("\t"+c.getType()+" "+c.getJava_name()+";\n\n");
 		}
 		sb.append("\n\n");
 		//getter setter
 		for(ColAttr c:cs){
-			sb.append("\tpublic void set"+c.getJava_name()+"("+c.getType()+" "+
+			sb.append("\tpublic void set"+c.getUpperJava_name()+"("+c.getType()+" "+
 					c.getJava_name()+"){\n\t\tthis."+c.getJava_name()+"="+c.getJava_name()+";\n\t}\n");
-			sb.append("\tpublic "+c.getType()+" get"+c.getJava_name()+"(){\n\t\treturn "+c.getJava_name()+";\n\t}\n");
+			sb.append("\tpublic "+c.getType()+" get"+c.getUpperJava_name()+"(){\n\t\treturn "+c.getJava_name()+";\n\t}\n");
 		}
 		sb.append("}");
 		FileOutper.outFile(sb.toString(), className+".java");

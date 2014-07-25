@@ -22,5 +22,11 @@ public class ColAttr {
 	public void setJava_name(String java_name) {
 		this.java_name = java_name;
 	}
+
+	public String getUpperJava_name() {
+		String s=java_name.substring(0, java_name.length()).toUpperCase();
+		return s+java_name.substring(0);
+	}
+	
 	
 }
