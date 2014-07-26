@@ -1,7 +1,10 @@
-package com.timfan1121;
+package com.timfan1121.model;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import com.timfan1121.ColAttr;
+import com.timfan1121.FileOutper;
 
 
 public class ModelGen {

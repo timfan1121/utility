@@ -1,4 +1,6 @@
-package com.timfan1121;
+package com.timfan1121.controller;
+
+import com.timfan1121.FileOutper;
 
 public class ControllerGen {
 
