@@ -1,0 +1,1 @@
+				<th><spring:message code="jsp.@l_className.@column" /></th>

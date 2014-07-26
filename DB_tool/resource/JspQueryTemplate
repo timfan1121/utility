@@ -1,0 +1,35 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<html>
+<body>
+	<form action="/webUI/bom/html/findByProdBarcode" method="get">
+		<table>
+			<tr>
+				<td><spring:message code="jsp.@l_className.id" /></td>
+				<td><input name="qId" value="<c:out value="${qId}"/>"/></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input type="submit" value="<spring:message code="jsp.com.query" />">
+					<a href="/webUI/@l_className/html/edit?id="><spring:message code="jsp.com.add"/></a>
+				</td>
+			</tr>
+		</table>
+	</form>
+	<table>
+		<thead>
+			<tr>
+@part1
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${@l_classNames}" var="@l_className">
+				<tr>
+@part2
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+</body>
+</html>
