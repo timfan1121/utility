@@ -4,6 +4,7 @@ public class ColAttr {
 	String db_name;
 	String type;
 	String java_name;
+	private String message;
 	public String getDb_name() {
 		return db_name;
 	}
@@ -26,6 +27,12 @@ public class ColAttr {
 	public String getUpperJava_name() {
 		String s=java_name.substring(0, java_name.length()).toUpperCase();
 		return s+java_name.substring(0);
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	
 	

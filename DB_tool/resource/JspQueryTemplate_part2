@@ -1,2 +1,1 @@
-					<td><c:out value="${ @l_className.@column }"></c:out></td>
-					<td><a href="/webUI/@l_className/html/edit?id=<c:out value="${ @l_className.id }"/>"><spring:message code="jsp.com.edit"/></a></td>
+				<th><spring:message code="@{i18n}"/></th>

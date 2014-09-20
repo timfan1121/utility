@@ -6,21 +6,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.timfan1121.ColAttr;
+import com.timfan1121.QueryColAttr;
 
-public class ColumnParser {
-	public static List<ColAttr> parser(String columns){
+public class QueryColumnParser {
+	public static List<QueryColAttr> parser(String columns){
 		Pattern pat = Pattern.compile("\\{([^\\{])+\\}");
 		Matcher m = pat.matcher(columns);
-		List<ColAttr> cs=new ArrayList<ColAttr>();
+		List<QueryColAttr> cs=new ArrayList<QueryColAttr>();
 		while(m.find()){
 			String s=m.group().substring(1, m.group().length()-1); //去頭尾
 			try {
 				String[] ss=s.split(",");
-				ColAttr c=new ColAttr();
-				c.setDb_name(ss[0]);
-				c.setJava_name(ss[1]);
-				c.setType(ss[2]);
-				c.setMessage(ss[3]);
+				QueryColAttr c=new QueryColAttr();
+				c.setColName(ss[0]);
+				c.setMsg(ss[1]);
 				cs.add(c);
 			} catch (Exception e) {
 				e.printStackTrace();

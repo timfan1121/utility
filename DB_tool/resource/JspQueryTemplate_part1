@@ -1,1 +1,1 @@
-				<th><spring:message code="jsp.@l_className.@column" /></th>
+				<tr><td><spring:message code="@{i18n}" /></td><td><input type="text" name="@{col_name}" id="@{col_name}" value="<c:out value="${@{col_name}}"/>"/></td></tr>

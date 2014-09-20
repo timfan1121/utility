@@ -1,0 +1,1 @@
+					<td><c:out value="${@{model_name}['@{bean_name}']}" /></td>

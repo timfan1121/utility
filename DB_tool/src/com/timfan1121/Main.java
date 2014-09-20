@@ -14,17 +14,22 @@ import sun.swing.MenuItemLayoutHelper.ColumnAlignment;
 import com.timfan1121.controller.ControllerGen;
 import com.timfan1121.dao.DaoGen;
 import com.timfan1121.jsp.JspQueryGen;
+import com.timfan1121.message.MessageGen;
 import com.timfan1121.model.ModelGen;
 import com.timfan1121.tool.ColumnParser;
+import com.timfan1121.tool.QueryColumnParser;
 
 public class Main {
 	Properties pro = new Properties();
 	List<ColAttr> cols=new ArrayList<ColAttr>();
+	List<QueryColAttr> qcols=new ArrayList<QueryColAttr>();
+	
 	public Main() {
 		try {
 			FileInputStream f = new FileInputStream(getClass().getResource("/column.properties").getPath());
 			pro.load(f);
 			cols.addAll(ColumnParser.parser(pro.getProperty("model.column")));
+			qcols.addAll(QueryColumnParser.parser(pro.getProperty("jsp.queryColumn")));
 			
 //			 model
 //			 new ModelGen().gen(pro.getProperty("model.column")
@@ -38,22 +43,24 @@ public class Main {
 			 
 			 
 			 // controller
-//			FileInputStream importF = new FileInputStream(getClass().getResource("/springMVC.txt").getPath());
-//			BufferedReader df = new BufferedReader(new InputStreamReader(
-//					new DataInputStream(importF)));
-//			String str;
-//			StringBuilder sb2 = new StringBuilder();
-//			while ((str = df.readLine()) != null) {
-//				sb2.append(str + "\n");
-//			}
-//			new ControllerGen().gen(sb2.toString(),
+//			new ControllerGen().gen(getClass().getResource("/controllerTemplate").getPath(),
 //					pro.getProperty("model.className"),
 //					pro.getProperty("model.className") + "Service");
 
 			// html 2
 			JspQueryGen q=new JspQueryGen();
-			q.gen(getClass().getResource("/JspQueryTemplate").getPath(), cols, pro.getProperty("model.className"));
+			q.gen(getClass().getResource("/JspQueryTemplate").getPath(),
+					cols, 
+					qcols,
+					pro.getProperty("message.startLable"),
+					pro.getProperty("jsp.html.package"),
+					pro.getProperty("jsp.modelName")
+					);
 			
+			
+			//message
+//			MessageGen mgen=new MessageGen();
+//			mgen.gen(cols,qcols, pro.getProperty("message.startLable"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

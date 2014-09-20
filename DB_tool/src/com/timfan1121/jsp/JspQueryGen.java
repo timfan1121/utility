@@ -8,9 +8,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.timfan1121.ColAttr;
 import com.timfan1121.FileOutper;
+import com.timfan1121.QueryColAttr;
 import com.timfan1121.tool.FileReader;
 
 
@@ -22,31 +25,41 @@ import com.timfan1121.tool.FileReader;
 public class JspQueryGen {
 	
 	public void gen(String path,
-			List<ColAttr> columns,
-			String className
+			List<ColAttr> cols,
+			List<QueryColAttr> qcols,
+			String messageStartLabel,
+			String packageName,
+			String modelName
 			) throws IOException{
 		
-		String l_className=className.substring(0, 1).toLowerCase()+className.substring(1);
 		
-		String d=body(path, 
-				className,
-				l_className,
-				 part1(path+"_part1", l_className, columns),
-				 part2(path+"_part2", l_className, columns));
+		String htmlStr=body(cols,
+				path, 
+				"",
+				"",
+				packageName,
+				modelName
+				);
 		
-//		d=d.replaceAll("@part1",);
-//		String ps=part2(path+"_part2", l_className, columns);
-//		d=d.replaceAll("@part2", );
-//		d=d.replaceAll("@part2", "4324324");
+		String p1Str=part1(path+"_part1",messageStartLabel, qcols);
+		htmlStr=htmlStr.replace("@{part1}",p1Str);
+		String p2Str=part2(path+"_part2",messageStartLabel, cols);
+		htmlStr=htmlStr.replace("@{part2}",p2Str);
+		String p3Str=part3(path+"_part3",modelName, cols);
+		htmlStr=htmlStr.replace("@{part3}",p3Str);
 		
-		FileOutper.outFile(d,className+"Query.jsp");
+		FileOutper.outFile(htmlStr,"view.jsp");
 	}
 	
-	public String body(String path,
-			String className,
-			String l_className,
+	/**
+	 * 主樣板的產生器
+	 */
+	public String body(List<ColAttr> cols
+			,String path,
 			String part1,
-			String part2) throws IOException{
+			String part2,
+			String packageName,
+			String modelName) throws IOException{
 		FileInputStream boy = new FileInputStream(path);
 		BufferedReader df = new BufferedReader(new InputStreamReader(new DataInputStream(boy)));
 		StringBuilder sb2 = new StringBuilder();
@@ -65,31 +78,48 @@ public class JspQueryGen {
 			e.printStackTrace();
 			return null;
 		}
+		
 		str=sb2.toString();
-		str=str.replaceAll("@l_className", l_className);
+		str=str.replaceAll("@\\{package_name\\}", packageName);
+		str=str.replaceAll("@\\{colunm_num\\}", String.valueOf(cols.size()));
+		str=str.replaceAll("@\\{model_name\\}", modelName);
 		return str;
 	}
 	
-	public String part1(String path,String l_className,List<ColAttr> column) throws IOException{
+	public String part1(String path,String startLabel,List<QueryColAttr> qcol) throws IOException{
 		FileInputStream part1Fis = new FileInputStream(path);
 		StringBuilder sb=new StringBuilder();
 		String s=FileReader.read(part1Fis);
-		for(ColAttr str:column){
-			String t=s.replaceAll("@l_className", l_className);
-			t=t.replaceAll("@column", str.getJava_name());
+		for(QueryColAttr q:qcol){
+			String t=s.replaceAll("@\\{i18n\\}",startLabel+"."+ q.getColName());
+			t=t.replaceAll("@\\{col_name\\}", q.getColName());
 			sb.append(t);
 		}
 		return sb.toString();
 	}
-	public String part2(String path,String l_className,List<ColAttr> column) throws IOException{
-		FileInputStream part2Fis = new FileInputStream(path);
+	
+	public String part2(String path,String startLabel,List<ColAttr> col) throws IOException{
+		FileInputStream part1Fis = new FileInputStream(path);
 		StringBuilder sb=new StringBuilder();
-		String s=FileReader.read(part2Fis);
-		for(ColAttr str:column){
-			String t=s.replaceAll("@l_className", l_className);
-			t=t.replaceAll("@column", str.getJava_name());
+		String s=FileReader.read(part1Fis);
+		for(ColAttr q:col){
+			String t=s.replaceAll("@\\{i18n\\}",startLabel+"."+ q.getJava_name());
 			sb.append(t);
 		}
 		return sb.toString();
 	}
+	
+	public String part3(String path,
+			String modelName,List<ColAttr> col) throws IOException{
+		FileInputStream part1Fis = new FileInputStream(path);
+		StringBuilder sb=new StringBuilder();
+		String s=FileReader.read(part1Fis);
+		for(ColAttr q:col){
+			String t=s.replaceAll("@\\{model_name\\}",modelName);
+			t=t.replaceAll("@\\{bean_name\\}",q.getJava_name());
+			sb.append(t);
+		}
+		return sb.toString();
+	}
+	
 }

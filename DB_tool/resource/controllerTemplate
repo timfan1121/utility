@@ -23,12 +23,12 @@ public class StoreController {
 	
 	@RequestMapping(value="/update", method = RequestMethod.GET)
 	public @ResponseBody Object update@className(@Param("@l_className")@className @l_className) {
-		//delete by id
+		//update action
 		return "";
 	}
 	@RequestMapping(value="/add", method = RequestMethod.GET)
 	public @ResponseBody Object add@className(@Param("@l_className")@className @l_className) {
-		//delete by id
+		//insert model action
 		return "";
 	}
 }

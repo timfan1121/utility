@@ -1,35 +1,49 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
+<head>
+<script src="<c:out value="${pageContext.request.contextPath}"/>/js/date.js" type="text/javascript"></script>
+<script src="http://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+//init date value
+$( document ).ready(function() {
+
+	});
+</script>
+
+<link href="<c:out value="${pageContext.request.contextPath}"/>/css/tableStyle1.css" rel="stylesheet"/>
+<link href="<c:out value="${pageContext.request.contextPath}"/>/css/tableStyle2.css" rel="stylesheet"/>
+</head>
+
 <body>
-	<form action="/webUI/bom/html/findByProdBarcode" method="get">
-		<table>
+	<div style="text-align:center;width:1280px;margin:0 auto;">
+		<%@include file="../header.jsp" %>
+		
+		<form action="<c:out value="${pageContext.request.contextPath}"/>/@{package_name}/view" method="get">
+			<table  class="flat-table2" style="margin-left: 50px">
+@{part1}
+				<tr><td colspan="2"><input type="submit"value="<spring:message code="jsp.com.query"/>" /></td></tr>
+			</table>
+		</form>
+	
+			<table class="flat-table">
 			<tr>
-				<td><spring:message code="jsp.@l_className.id" /></td>
-				<td><input name="qId" value="<c:out value="${qId}"/>"/></td>
+				<td colspan="@{colunm_num}">header</td>
+@{part2}
 			</tr>
 			<tr>
-				<td colspan="2">
-					<input type="submit" value="<spring:message code="jsp.com.query" />">
-					<a href="/webUI/@l_className/html/edit?id="><spring:message code="jsp.com.add"/></a>
-				</td>
 			</tr>
-		</table>
-	</form>
-	<table>
-		<thead>
-			<tr>
-@part1
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${@l_classNames}" var="@l_className">
+			<c:forEach var="@{model_name}" items="${@{model_name}s}">
 				<tr>
-@part2
+@{part3}				
 				</tr>
 			</c:forEach>
-		</tbody>
-	</table>
+		</table>
+	</div>
 </body>
 </html>
